@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "VideoReels",
+        "repositoryURL": "https://github.com/ksc89kim/VideoReels.git",
+        "state": {
+          "branch": null,
+          "revision": "1bae29bb58878435bd6ce1caea78e4f23547f495",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
