@@ -14,12 +14,13 @@ protocol VideoReelsPrefetcher: AnyObject {
   typealias Response = VideoReels.FetchResponse
   typealias Priority = VideoReels.FetchPriority
   typealias FetchError = VideoReels.FetchError
+  typealias PendingItem = VideoReels.PendingItem
 
   //MARK: - Properties
 
   var prefetchURLs: [URL] { get set }
-  var pendingURLs: [URL] { get set }
-  var pendingIndexs: [String: Int] { get set }
+  var pendingQueue: PriorityQueue<PendingItem> { get set }
+  var priorityCount: Int { get set }
   var completedItems: [Response] { get set }
   var failedErrors: [Error] { get set }
   var isTasking: Bool { get set }
@@ -47,29 +48,17 @@ extension VideoReelsPrefetcher {
     self.isTasking = false
   }
 
-  func add(url: URL, priority: Priority) {
-    switch priority {
-    case .high:
-      if self.pendingIndexs.keys.contains(url.absoluteString) {
-        self.pendingURLs.bringToFront(item: url)
-      } else {
-        self.pendingURLs.insert(
-          url,
-          at: 0
-        )
-        self.prefetchURLs.append(url)
-      }
-    case .low:
-      self.prefetchURLs.append(url)
-      self.pendingURLs.append(url)
+  func add(urls: [URL]) {
+    urls.forEach { (url: URL) in
+      self.add(url: url, priority: .low)
     }
-    self.updatePendingIndexs()
   }
 
-  func add(urls: [URL]) {
-    self.prefetchURLs.append(contentsOf: urls)
-    self.pendingURLs.append(contentsOf: urls)
-    self.updatePendingIndexs()
+  func add(url: URL, priority: Priority) {
+    self.clearMaxPriorityIfNeeded()
+    self.pendingQueue.insert(.init(url: url, priority: self.priorityCount * priority.rawValue))
+    self.prefetchURLs.append(url)
+    self.addPriorityCount()
   }
 }
 
@@ -81,12 +70,9 @@ private extension VideoReelsPrefetcher {
       return
     }
 
-    guard !self.pendingURLs.isEmpty else {
+    guard let url = self.pendingQueue.pop()?.url else {
       return
     }
-
-    let url = self.pendingURLs.removeFirst()
-    self.pendingIndexs.removeValue(forKey: url.absoluteString)
 
     self.load(url: url){ [weak self] (response: Response) in
       switch response {
@@ -102,19 +88,21 @@ private extension VideoReelsPrefetcher {
     }
   }
 
-  func updatePendingIndexs() {
-    self.pendingURLs.enumerated()
-      .forEach { (offset: Int, url: URL) in
-        self.pendingIndexs[url.absoluteString] = offset
-      }
-  }
-
   func reset() {
     self.isTasking = false
-    self.pendingURLs.removeAll()
     self.completedItems.removeAll()
+    self.pendingQueue.removeAll()
     self.prefetchURLs.removeAll()
-    self.pendingIndexs.removeAll()
+    self.clearMaxPriorityIfNeeded()
+  }
+
+  func addPriorityCount() {
+    self.priorityCount += 1
+  }
+
+  func clearMaxPriorityIfNeeded() {
+    guard self.pendingQueue.isEmpty else { return }
+    self.priorityCount = 1
   }
 
   var finishedItems: Bool {

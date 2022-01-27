@@ -13,12 +13,17 @@ final class VideoReelsImagePrefetcher: VideoReelsPrefetcher {
   // MARK: - Properties
   
   var prefetchURLs: [URL] = []
-  var pendingURLs: [URL] = []
-  var pendingIndexs: [String : Int] = [:]
   var completedItems: [Response] = []
   var failedErrors: [Error] = []
   var isTasking: Bool = false
   var queue: DispatchQueue = .init(label: "video.reels.prefetch")
+  var pendingQueue: PriorityQueue<PendingItem> = {
+    let queue = PriorityQueue<PendingItem> { (lhs: PendingItem, rhs: PendingItem) -> Bool in
+      return lhs > rhs
+    }
+    return queue
+  }()
+  var priorityCount = 1
   private var asset: AVAsset?
 
   // MARK: - Functions
