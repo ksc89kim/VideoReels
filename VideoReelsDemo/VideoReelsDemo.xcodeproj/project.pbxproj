@@ -16,6 +16,8 @@
 		A4AB85E526BE6BC80048C70A /* VideoReelsDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AB85E426BE6BC80048C70A /* VideoReelsDemoTests.swift */; };
 		A4AB85F026BE6BC80048C70A /* VideoReelsDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AB85EF26BE6BC80048C70A /* VideoReelsDemoUITests.swift */; };
 		A4AB85FF26BE6C230048C70A /* VideoReels in Frameworks */ = {isa = PBXBuildFile; productRef = A4AB85FE26BE6C230048C70A /* VideoReels */; };
+		A4AB860526BE7B9D0048C70A /* ReelsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AB860426BE7B9D0048C70A /* ReelsCell.swift */; };
+		A4AB860726BE7BA90048C70A /* ReelsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AB860626BE7BA90048C70A /* ReelsItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		A4AB85EB26BE6BC80048C70A /* VideoReelsDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoReelsDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4AB85EF26BE6BC80048C70A /* VideoReelsDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoReelsDemoUITests.swift; sourceTree = "<group>"; };
 		A4AB85F126BE6BC80048C70A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4AB860426BE7B9D0048C70A /* ReelsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelsCell.swift; sourceTree = "<group>"; };
+		A4AB860626BE7BA90048C70A /* ReelsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelsItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 				A4AB85CD26BE6BC60048C70A /* AppDelegate.swift */,
 				A4AB85CF26BE6BC60048C70A /* SceneDelegate.swift */,
 				A4AB85D126BE6BC60048C70A /* ViewController.swift */,
+				A4AB860426BE7B9D0048C70A /* ReelsCell.swift */,
+				A4AB860626BE7BA90048C70A /* ReelsItem.swift */,
 				A4AB85D326BE6BC60048C70A /* Main.storyboard */,
 				A4AB85D626BE6BC80048C70A /* Assets.xcassets */,
 				A4AB85D826BE6BC80048C70A /* LaunchScreen.storyboard */,
@@ -267,8 +273,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4AB85D226BE6BC60048C70A /* ViewController.swift in Sources */,
+				A4AB860526BE7B9D0048C70A /* ReelsCell.swift in Sources */,
 				A4AB85CE26BE6BC60048C70A /* AppDelegate.swift in Sources */,
 				A4AB85D026BE6BC60048C70A /* SceneDelegate.swift in Sources */,
+				A4AB860726BE7BA90048C70A /* ReelsItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

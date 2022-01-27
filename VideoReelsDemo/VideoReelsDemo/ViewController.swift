@@ -14,6 +14,7 @@ final class ViewController: UIViewController {
 
   private let reelsView: VideoReelsView = {
     let view = VideoReelsView.view()
+    view.register(ReelsCell.self, itemType: ReelsItem.self)
     return view
   }()
 
@@ -45,7 +46,6 @@ final class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
     self.setup()
 
     let items = [
@@ -55,9 +55,15 @@ final class ViewController: UIViewController {
       "IMG_0829"
     ]
     .enumerated()
-    .map { idx, url -> VideoReelsBaseItem in
-      return .init(idx: "\(idx)", url: self.createLocalUrl(for: url, ofType: "mov"), isMuted: false)
+    .map { idx, url -> ReelsItem in
+      return .init(
+        idx: "\(idx)",
+        url: self.createLocalUrl(for: url, ofType: "mov"),
+        isMuted: false,
+        name: "테스트"
+      )
     }
+
     self.reelsView.reloadAll(items: items)
   }
 
@@ -98,16 +104,18 @@ final class ViewController: UIViewController {
 
     self.insertButton.addAction(
       .init(handler: { _ in
-        let items: [VideoReelsBaseItem] = [
+        let items: [ReelsItem] = [
           .init(
             idx: "11",
             url: self.createLocalUrl(for: "IMG_0829", ofType: "mov"),
-            isMuted: false
+            isMuted: false,
+            name: "다롱이"
           ),
           .init(
             idx: "12",
             url: self.createLocalUrl(for: "IMG_0829", ofType: "mov"),
-            isMuted: false
+            isMuted: false,
+            name: "드론"
           )
         ]
         self.reelsView.insert(items: items)
