@@ -56,7 +56,7 @@ open class VideoReelsCollectionViewCell: UICollectionViewCell, MakeLayout, Video
   // MARK: - Layout
 
   open func addSubViews() {
-    self.addSubview(self.playerView)
+    self.contentView.addSubview(self.playerView)
   }
 
   open func makeConstraints() {
