@@ -19,7 +19,7 @@ public struct VideoReels {
 
   enum FetchPriority: Int {
     case low = 1
-    case high = 10000
+    case high = 100000
   }
 
   enum FetchError: Error {

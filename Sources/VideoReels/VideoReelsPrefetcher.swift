@@ -55,8 +55,8 @@ extension VideoReelsPrefetcher {
   }
 
   func add(url: URL, priority: Priority) {
-    self.clearMaxPriorityIfNeeded()
-    self.pendingQueue.insert(.init(url: url, priority: self.priorityCount * priority.rawValue))
+    self.clearPriorityCountIfNeeded()
+    self.pendingQueue.insert(.init(url: url, priority: self.priorityCount + priority.rawValue))
     self.prefetchURLs.append(url)
     self.addPriorityCount()
   }
@@ -93,14 +93,14 @@ private extension VideoReelsPrefetcher {
     self.completedItems.removeAll()
     self.pendingQueue.removeAll()
     self.prefetchURLs.removeAll()
-    self.clearMaxPriorityIfNeeded()
+    self.clearPriorityCountIfNeeded()
   }
 
   func addPriorityCount() {
     self.priorityCount += 1
   }
 
-  func clearMaxPriorityIfNeeded() {
+  func clearPriorityCountIfNeeded() {
     guard self.pendingQueue.isEmpty else { return }
     self.priorityCount = 1
   }
